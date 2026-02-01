@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 GradeX - Professional GPA Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="brand">
+                    <div class="logo">
+                        <i class="fas fa-chart-line"></i>
+                        <span>GradeX</span>
+                    </div>
+                    <p class="tagline">Professional Academic Performance Tracker</p>
+                </div>
+                <div class="header-controls">
+                    <div class="theme-toggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Student&background=4361ee&color=fff" alt="User">
+                        <span>Student Dashboard</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-section">
+                <h1>Track Your Academic Success with <span class="highlight">GradeX</span></h1>
+                <p class="hero-subtitle">Advanced GPA calculator with multi-program support, semester tracking, and detailed analytics</p>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <i class="fas fa-university"></i>
+                        <div>
+                            <h3>Multi-University</h3>
+                            <p>SZABIST Compatible</p>
+                        </div>
+                    </div>
+                    <div class="hero-stat">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <h3>All Programs</h3>
+                            <p>BS, MS, PhD Support</p>
+                        </div>
+                    </div>
+                    <div class="hero-stat">
+                        <i class="fas fa-chart-pie"></i>
+                        <div>
+                            <h3>Smart Analytics</h3>
+                            <p>Real-time Insights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Current GPA</h3>
+                        <div class="stat-value" id="currentGpa">0.00</div>
+                        <div class="stat-trend neutral"><i class="fas fa-minus"></i> No data</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon success">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Credits</h3>
+                        <div class="stat-value" id="totalCredits">0</div>
+                        <div class="stat-desc">Credit Hours</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Courses</h3>
+                        <div class="stat-value" id="totalCourses">0</div>
+                        <div class="stat-desc">Enrolled Courses</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Target GPA</h3>
+                        <div class="stat-value editable" contenteditable="true" id="targetGpa">3.50</div>
+                        <div class="stat-desc">Click to edit</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Left Panel - Input -->
+                <div class="left-panel">
+                    <!-- Program Selection Card -->
+                    <div class="card input-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-graduation-cap"></i> Academic Program Setup</h3>
+                            <div class="card-badge">Step 1</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="degreeLevel"><i class="fas fa-user-graduate"></i> Degree Level</label>
+                                    <select id="degreeLevel" class="form-select">
+                                        <option value="">Select Degree Level</option>
+                                        <option value="bs">Bachelor's (BS)</option>
+                                        <option value="ms">Master's (MS)</option>
+                                        <option value="phd">PhD</option>
+                                        <option value="bba">BBA</option>
+                                        <option value="mba">MBA</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="programSelect"><i class="fas fa-university"></i> Program</label>
+                                    <select id="programSelect" class="form-select">
+                                        <option value="">Select Program</option>
+                                        <optgroup label="Software Engineering">
+                                            <option value="BSSE">BS Software Engineering</option>
+                                            <option value="MSSE">MS Software Engineering</option>
+                                            <option value="PHDSE">PhD Software Engineering</option>
+                                        </optgroup>
+                                        <optgroup label="Computer Science">
+                                            <option value="BSCS">BS Computer Science</option>
+                                            <option value="MSCS">MS Computer Science</option>
+                                            <option value="PHDS">PhD Computer Science</option>
+                                        </optgroup>
+                                        <optgroup label="Business Administration">
+                                            <option value="BBA">Bachelor of Business Admin</option>
+                                            <option value="MBA">Master of Business Admin</option>
+                                            <option value="EMBA">Executive MBA</option>
+                                        </optgroup>
+                                        <optgroup label="Other Programs">
+                                            <option value="BEE">Electrical Engineering</option>
+                                            <option value="BCS">BS Cyber Security</option>
+                                            <option value="BDA">BS Data Analytics</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="semesterSelect"><i class="fas fa-calendar-alt"></i> Semester</label>
+                                    <select id="semesterSelect" class="form-select">
+                                        <option value="">Select Semester</option>
+                                        <option value="1">Semester 1</option>
+                                        <option value="2">Semester 2</option>
+                                        <option value="3">Semester 3</option>
+                                        <option value="4">Semester 4</option>
+                                        <option value="5">Semester 5</option>
+                                        <option value="6">Semester 6</option>
+                                        <option value="7">Semester 7</option>
+                                        <option value="8">Semester 8</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="sessionSelect"><i class="fas fa-clock"></i> Academic Session</label>
+                                    <select id="sessionSelect" class="form-select">
+                                        <option value="fall2024">Fall 2024</option>
+                                        <option value="spring2025">Spring 2025</option>
+                                        <option value="fall2025">Fall 2025</option>
+                                        <option value="spring2026">Spring 2026</option>
+                                        <option value="fall2026" selected>Fall 2026</option>
+                                        <option value="spring2027">Spring 2027</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Input Card -->
+                    <div class="card input-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-book-medical"></i> Add Course Details</h3>
+                            <div class="card-badge">Step 2</div>
+                        </div>
+                        <div class="card-body">
+                            <form id="courseForm">
+                                <div class="form-group">
+                                    <label for="courseCategory"><i class="fas fa-tags"></i> Course Category</label>
+                                    <select id="courseCategory" class="form-select" required>
+                                        <option value="">Select Category</option>
+                                        <option value="SE">Software Engineering (SE)</option>
+                                        <option value="CS">Computer Science (CS)</option>
+                                        <option value="CSCL">Core Course (CSCL)</option>
+                                        <option value="MTH">Mathematics (MTH)</option>
+                                        <option value="GEN">General Education (GEN)</option>
+                                        <option value="BBA">Business (BBA)</option>
+                                        <option value="MGT">Management (MGT)</option>
+                                        <option value="ELEC">Elective (ELEC)</option>
+                                        <option value="PROJ">Project (PROJ)</option>
+                                        <option value="THESIS">Thesis (THESIS)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="courseCode"><i class="fas fa-hashtag"></i> Course Code</label>
+                                        <input type="text" id="courseCode" 
+                                               placeholder="e.g., SE-1205, CS-101, BBA-301" 
+                                               pattern="[A-Z]{2,4}-\d{3,4}"
+                                               title="Format: XXX-1234 (e.g., SE-1205)"
+                                               required>
+                                        <div class="input-hint">Format: XXX-1234 (e.g., SE-1205)</div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="courseName"><i class="fas fa-book-open"></i> Course Name</label>
+                                        <input type="text" id="courseName" 
+                                               placeholder="e.g., Software Engineering Fundamentals" 
+                                               required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-weight-hanging"></i> Credit Hours: <span class="value-display" id="creditValue">3</span></label>
+                                        <input type="range" id="creditHours" min="1" max="6" value="3" class="slider">
+                                        <div class="range-ticks">
+                                            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label><i class="fas fa-percentage"></i> Marks: <span class="value-display" id="marksValue">85</span></label>
+                                        <input type="range" id="marks" min="0" max="100" value="85" class="slider">
+                                        <div class="range-ticks">
+                                            <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Grade Preview -->
+                                <div class="preview-card">
+                                    <div class="preview-header">
+                                        <i class="fas fa-eye"></i> Grade Preview
+                                    </div>
+                                    <div class="preview-grid">
+                                        <div class="preview-item">
+                                            <div class="preview-label">Marks</div>
+                                            <div class="preview-value" id="previewMarks">85</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Grade</div>
+                                            <div class="preview-value grade-A" id="previewGrade">A</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Points</div>
+                                            <div class="preview-value" id="previewPoints">3.75</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Quality Points</div>
+                                            <div class="preview-value" id="previewQuality">11.25</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-plus-circle"></i> Add Course to Semester
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="action-grid">
+                                <button class="action-btn" id="calculateAllBtn">
+                                    <i class="fas fa-calculator"></i>
+                                    <span>Calculate GPA</span>
+                                </button>
+                                <button class="action-btn" id="exportBtn">
+                                    <i class="fas fa-file-export"></i>
+                                    <span>Export Report</span>
+                                </button>
+                                <button class="action-btn" id="saveBtn">
+                                    <i class="fas fa-save"></i>
+                                    <span>Save Data</span>
+                                </button>
+                                <button class="action-btn danger" id="resetBtn">
+                                    <i class="fas fa-trash"></i>
+                                    <span>Reset All</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Courses & Analytics -->
+                <div class="right-panel">
+                    <!-- Courses Table Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-content">
+                                <h3><i class="fas fa-list-ul"></i> Course List</h3>
+                                <div class="header-actions">
+                                    <div class="badge" id="courseCountBadge">0 Courses</div>
+                                    <button class="btn-icon" id="sortBtn" title="Sort">
+                                        <i class="fas fa-sort-amount-down"></i>
+                                    </button>
+                                    <button class="btn-icon" id="filterBtn" title="Filter">
+                                        <i class="fas fa-filter"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="coursesTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Course Name</th>
+                                            <th>Category</th>
+                                            <th>Credits</th>
+                                            <th>Marks</th>
+                                            <th>Grade</th>
+                                            <th>Points</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="coursesBody">
+                                        <tr class="empty-row">
+                                            <td colspan="8">
+                                                <div class="empty-state">
+                                                    <i class="fas fa-book-open"></i>
+                                                    <h4>No Courses Added</h4>
+                                                    <p>Start by adding your first course using the form on the left</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="footer-stats">
+                                <div class="footer-stat">
+                                    <span>Total Quality Points:</span>
+                                    <strong id="totalQualityPoints">0.00</strong>
+                                </div>
+                                <div class="footer-stat">
+                                    <span>GPA Status:</span>
+                                    <span class="status-badge neutral" id="gpaStatus">No Data</span>
+                                </div>
+                                <div class="footer-stat">
+                                    <span>Required for Target:</span>
+                                    <span id="requiredMarks">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grade Distribution -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-bar"></i> Grade Distribution</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="grade-distribution">
+                                <div class="grade-bar excellent" style="width: 0%" data-grade="A+"></div>
+                                <div class="grade-bar excellent" style="width: 0%" data-grade="A"></div>
+                                <div class="grade-bar good" style="width: 0%" data-grade="B+"></div>
+                                <div class="grade-bar good" style="width: 0%" data-grade="B"></div>
+                                <div class="grade-bar average" style="width: 0%" data-grade="C+"></div>
+                                <div class="grade-bar average" style="width: 0%" data-grade="C"></div>
+                                <div class="grade-bar min-pass" style="width: 0%" data-grade="C-"></div>
+                                <div class="grade-bar fail" style="width: 0%" data-grade="F"></div>
+                            </div>
+                            <div class="grade-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color excellent"></span>
+                                    <span>A/A+ (Excellent)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color good"></span>
+                                    <span>B/B+ (Good)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color average"></span>
+                                    <span>C/C+ (Average)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color min-pass"></span>
+                                    <span>C- (Minimum Pass)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color fail"></span>
+                                    <span>F (Fail)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Panel - Grading Scale & Info -->
+            <div class="bottom-panel">
+                <!-- Grading Scale -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h3><i class="fas fa-scale-balanced"></i> SZABIST Grading System</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="grade-scale-container">
+                            <div class="grade-scale-header">
+                                <div>Marks Range</div>
+                                <div>Letter Grade</div>
+                                <div>Grade Points</div>
+                                <div>Status</div>
+                                <div>Description</div>
+                            </div>
+                            
+                            <div class="grade-scale-row excellent">
+                                <div>90 - 100</div>
+                                <div><strong>A+</strong></div>
+                                <div>4.00</div>
+                                <div><span class="status excellent">Excellent</span></div>
+                                <div>Outstanding Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row excellent">
+                                <div>85 - 89</div>
+                                <div><strong>A</strong></div>
+                                <div>3.75</div>
+                                <div><span class="status excellent">Excellent</span></div>
+                                <div>Superior Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row good">
+                                <div>80 - 84</div>
+                                <div><strong>A-</strong></div>
+                                <div>3.50</div>
+                                <div><span class="status good">Very Good</span></div>
+                                <div>Very Good Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row good">
+                                <div>75 - 79</div>
+                                <div><strong>B+</strong></div>
+                                <div>3.25</div>
+                                <div><span class="status good">Good</span></div>
+                                <div>Good Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row average">
+                                <div>70 - 74</div>
+                                <div><strong>B</strong></div>
+                                <div>3.00</div>
+                                <div><span class="status average">Satisfactory</span></div>
+                                <div>Satisfactory Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row average">
+                                <div>66 - 69</div>
+                                <div><strong>B-</strong></div>
+                                <div>2.75</div>
+                                <div><span class="status average">Above Average</span></div>
+                                <div>Above Average Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row passing">
+                                <div>63 - 65</div>
+                                <div><strong>C+</strong></div>
+                                <div>2.50</div>
+                                <div><span class="status passing">Passing</span></div>
+                                <div>Passing Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row passing">
+                                <div>60 - 62</div>
+                                <div><strong>C</strong></div>
+                                <div>2.00</div>
+                                <div><span class="status passing">Minimum Pass</span></div>
+                                <div>Minimum Passing Performance</div>
+                            </div>
+                            
+                            <div class="grade-scale-row min-pass">
+                                <div>55 - 59</div>
+                                <div><strong>C-</strong></div>
+                                <div>1.50</div>
+                                <div><span class="status min-pass">Conditional</span></div>
+                                <div>Conditional Pass</div>
+                            </div>
+                            
+                            <div class="grade-scale-row fail">
+                                <div>0 - 54</div>
+                                <div><strong>F</strong></div>
+                                <div>0.00</div>
+                                <div><span class="status fail">Fail</span></div>
+                                <div>Failed - Must Repeat Course</div>
+                            </div>
+                        </div>
+                        
+                        <div class="grade-notes">
+                            <div class="note">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>Important:</strong> Minimum passing marks are 55 (C- grade). 
+                                    CGPA is calculated by dividing total quality points by total credit hours.
+                                </div>
+                            </div>
+                            <div class="note">
+                                <i class="fas fa-calculator"></i>
+                                <div>
+                                    <strong>Formula:</strong> GPA = Σ(Grade Points × Credit Hours) ÷ Σ(Credit Hours)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-chart-line"></i>
+                        <span>GradeX</span>
+                    </div>
+                    <p class="footer-description">
+                        Professional GPA calculator with multi-program support, 
+                        semester tracking, and advanced analytics.
+                    </p>
+                    <div class="footer-badges">
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">Local Storage</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-calculator"></i> GPA Calculator</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Course Library</a></li>
+                        <li><a href="#"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+                        <li><a href="#"><i class="fas fa-file-export"></i> Export Reports</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-book-open"></i> Documentation</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-bug"></i> Report Issue</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Deployment</h4>
+                    <div class="deployment-badges">
+                        <a href="https://github.com" class="deploy-btn github" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://vercel.com" class="deploy-btn vercel" target="_blank">
+                            <i class="fas fa-cloud-upload-alt"></i> Vercel
+                        </a>
+                        <a href="#" class="deploy-btn download">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 <strong>GradeX</strong> - Professional GPA Calculator | Version 3.0 | SZABIST Grading System</p>
+                <p class="footer-credit">
+                    <i class="fas fa-code"></i> Built with passion for academic excellence | 
+                    <i class="fas fa-heart"></i> Made for students, by students
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
