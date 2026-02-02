@@ -2,15 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🎓 GradeX - Professional GPA Calculator</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+    <style>
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: #4361ee;
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            cursor: pointer;
+            display: none;
+        }
+        
+        .mobile-menu-btn.active {
+            background: #ef4444;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+    </style>
 </head>
 <body>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <div class="container">
         <!-- Header -->
         <header>
@@ -65,7 +101,7 @@
 
         <!-- Main Dashboard -->
         <main class="dashboard">
-            <!-- Quick Stats -->
+            
             <div class="quick-stats">
                 <div class="stat-card">
                     <div class="stat-icon primary">
@@ -112,11 +148,11 @@
                 </div>
             </div>
 
-            <!-- Main Content -->
+            
             <div class="main-content">
-                <!-- Left Panel - Input -->
+               
                 <div class="left-panel">
-                    <!-- Program Selection Card -->
+                    
                     <div class="card input-card">
                         <div class="card-header">
                             <h3><i class="fas fa-graduation-cap"></i> Academic Program Setup</h3>
@@ -193,7 +229,7 @@
                         </div>
                     </div>
 
-                    <!-- Course Input Card -->
+                    
                     <div class="card input-card">
                         <div class="card-header">
                             <h3><i class="fas fa-book-medical"></i> Add Course Details</h3>
@@ -255,7 +291,7 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Grade Preview -->
+                               
                                 <div class="preview-card">
                                     <div class="preview-header">
                                         <i class="fas fa-eye"></i> Grade Preview
@@ -287,7 +323,7 @@
                         </div>
                     </div>
 
-                    <!-- Quick Actions -->
+                    
                     <div class="card">
                         <div class="card-header">
                             <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
@@ -315,9 +351,9 @@
                     </div>
                 </div>
 
-                <!-- Right Panel - Courses & Analytics -->
+                
                 <div class="right-panel">
-                    <!-- Courses Table Card -->
+                    
                     <div class="card">
                         <div class="card-header">
                             <div class="card-header-content">
@@ -380,7 +416,7 @@
                         </div>
                     </div>
 
-                    <!-- Grade Distribution -->
+                    
                     <div class="card">
                         <div class="card-header">
                             <h3><i class="fas fa-chart-bar"></i> Grade Distribution</h3>
@@ -423,9 +459,9 @@
                 </div>
             </div>
 
-            <!-- Bottom Panel - Grading Scale & Info -->
+            
             <div class="bottom-panel">
-                <!-- Grading Scale -->
+                
                 <div class="card full-width">
                     <div class="card-header">
                         <h3><i class="fas fa-scale-balanced"></i> SZABIST Grading System</h3>
@@ -576,22 +612,26 @@
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-question-circle"></i> Help Center</a></li>
                         <li><a href="#"><i class="fas fa-book-open"></i> Documentation</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                        <li><a href="#"><i class="fas fa-bug"></i> Report Issue</a></li>
-                    </ul>
+                        <li><a href="tel:03320409268"><i class="fas fa-phone"></i> Contact: 0332-0409268</a></li>
+                        <li>
+  <a href="mailto:irfanjameel1211@gmail.com?subject=Contact from your website" class="email-link">
+    <i class="fas fa-envelope"></i> Email Us
+  </a>
+</li>
+
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Deployment</h4>
+                    <h4>Connect & Deploy</h4>
                     <div class="deployment-badges">
+                        <a href="https://www.linkedin.com/in/irfan-jameel-763425395/" class="deploy-btn linkedin" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
                         <a href="https://github.com" class="deploy-btn github" target="_blank">
                             <i class="fab fa-github"></i> GitHub
                         </a>
                         <a href="https://vercel.com" class="deploy-btn vercel" target="_blank">
                             <i class="fas fa-cloud-upload-alt"></i> Vercel
-                        </a>
-                        <a href="#" class="deploy-btn download">
-                            <i class="fas fa-download"></i> Download
                         </a>
                     </div>
                 </div>
@@ -601,18 +641,23 @@
                 <p>&copy; 2024 <strong>GradeX</strong> - Professional GPA Calculator | Version 3.0 | SZABIST Grading System</p>
                 <p class="footer-credit">
                     <i class="fas fa-code"></i> Built with passion for academic excellence | 
-                    <i class="fas fa-heart"></i> Made by Irfan
+                    <i class="fas fa-heart"></i> Made by Irfann
+              <a href="https://www.linkedin.com/in/irfan-jameel-763425395/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+    <i class="fab fa-linkedin"></i>
+</a>
+
+                    </a>
                 </p>
             </div>
         </footer>
     </div>
 
-    <!-- External Libraries -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     
-    <!-- Main Script -->
+    
     <script src="script.js"></script>
 </body>
 </html>

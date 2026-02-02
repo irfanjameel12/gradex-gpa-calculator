@@ -1,5 +1,4 @@
-// GradeX - Professional GPA Calculator v3.0
-// Complete with SZABIST Curriculum Database
+
 
 class GradeX {
     constructor() {
@@ -9,7 +8,7 @@ class GradeX {
         this.currentSemester = '';
         this.isDarkMode = false;
         
-        // SZABIST Curriculum Database
+       
         this.curriculum = {
             'BSSE': {
                 '1': [
@@ -229,6 +228,8 @@ class GradeX {
         this.updateGradePreview();
         this.initTheme();
         this.setupCurriculumButtons();
+        this.setupMobileMenu();
+        this.addCurriculumSection();
     }
 
     initTheme() {
@@ -267,54 +268,120 @@ class GradeX {
 
     setupEventListeners() {
         // Form submission
-        document.getElementById('courseForm').addEventListener('submit', (e) => this.handleFormSubmit(e));
+        setTimeout(() => {
+            const courseForm = document.getElementById('courseForm');
+            if (courseForm) {
+                courseForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
+            }
+        }, 100);
         
         // Slider events
-        document.getElementById('marks').addEventListener('input', () => this.updateGradePreview());
-        document.getElementById('creditHours').addEventListener('input', () => this.updateGradePreview());
+        setTimeout(() => {
+            const marksSlider = document.getElementById('marks');
+            const creditSlider = document.getElementById('creditHours');
+            
+            if (marksSlider) {
+                marksSlider.addEventListener('input', () => this.updateGradePreview());
+            }
+            if (creditSlider) {
+                creditSlider.addEventListener('input', () => this.updateGradePreview());
+            }
+        }, 100);
         
         // Theme toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => this.toggleTheme());
-        }
+        setTimeout(() => {
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => this.toggleTheme());
+            }
+        }, 100);
         
         // Program and semester selection
-        document.getElementById('programSelect').addEventListener('change', (e) => {
-            this.currentProgram = e.target.value;
-            this.updateCourseCodeExamples();
-            this.showCurriculumCourses();
-        });
-        
-        document.getElementById('semesterSelect').addEventListener('change', (e) => {
-            this.currentSemester = e.target.value;
-            this.showCurriculumCourses();
-        });
+        setTimeout(() => {
+            const programSelect = document.getElementById('programSelect');
+            const semesterSelect = document.getElementById('semesterSelect');
+            
+            if (programSelect) {
+                programSelect.addEventListener('change', (e) => {
+                    this.currentProgram = e.target.value;
+                    this.updateCourseCodeExamples();
+                    this.showCurriculumCourses();
+                });
+            }
+            
+            if (semesterSelect) {
+                semesterSelect.addEventListener('change', (e) => {
+                    this.currentSemester = e.target.value;
+                    this.showCurriculumCourses();
+                });
+            }
+        }, 100);
         
         // Quick actions
-        document.getElementById('calculateAllBtn').addEventListener('click', () => this.calculateGPA());
-        document.getElementById('exportBtn').addEventListener('click', () => this.exportReport());
-        document.getElementById('saveBtn').addEventListener('click', () => this.saveData());
-        document.getElementById('resetBtn').addEventListener('click', () => this.resetAll());
-        document.getElementById('sortBtn').addEventListener('click', () => this.sortCourses());
-        document.getElementById('filterBtn').addEventListener('click', () => this.filterCourses());
+        setTimeout(() => {
+            const calculateBtn = document.getElementById('calculateAllBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const sortBtn = document.getElementById('sortBtn');
+            const filterBtn = document.getElementById('filterBtn');
+            
+            if (calculateBtn) calculateBtn.addEventListener('click', () => this.calculateGPA());
+            if (exportBtn) exportBtn.addEventListener('click', () => this.exportReport());
+            if (saveBtn) saveBtn.addEventListener('click', () => this.saveData());
+            if (resetBtn) resetBtn.addEventListener('click', () => this.resetAll());
+            if (sortBtn) sortBtn.addEventListener('click', () => this.sortCourses());
+            if (filterBtn) filterBtn.addEventListener('click', () => this.filterCourses());
+        }, 100);
         
         // Target GPA editing
-        const targetGpa = document.getElementById('targetGpa');
-        if (targetGpa) {
-            targetGpa.addEventListener('input', (e) => {
-                this.calculateRequiredForTarget();
-            });
-            
-            targetGpa.addEventListener('blur', (e) => {
-                let value = parseFloat(e.target.textContent);
-                if (isNaN(value) || value < 0 || value > 4.0) {
-                    e.target.textContent = '3.50';
-                    toastr.error('Please enter a valid GPA between 0.00 and 4.00');
+        setTimeout(() => {
+            const targetGpa = document.getElementById('targetGpa');
+            if (targetGpa) {
+                targetGpa.addEventListener('input', (e) => {
+                    this.calculateRequiredForTarget();
+                });
+                
+                targetGpa.addEventListener('blur', (e) => {
+                    let value = parseFloat(e.target.textContent);
+                    if (isNaN(value) || value < 0 || value > 4.0) {
+                        e.target.textContent = '3.50';
+                        toastr.error('Please enter a valid GPA between 0.00 and 4.00');
+                    }
+                    this.calculateRequiredForTarget();
+                });
+            }
+        }, 100);
+    }
+
+    setupMobileMenu() {
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const leftPanel = document.querySelector('.left-panel');
+                if (leftPanel) {
+                    leftPanel.classList.toggle('mobile-visible');
+                    document.body.classList.toggle('menu-open');
+                    mobileMenuBtn.classList.toggle('active');
                 }
-                this.calculateRequiredForTarget();
             });
         }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const leftPanel = document.querySelector('.left-panel');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (leftPanel && 
+                !e.target.closest('.left-panel') && 
+                !e.target.closest('#mobileMenuBtn') &&
+                window.innerWidth <= 768) {
+                leftPanel.classList.remove('mobile-visible');
+                document.body.classList.remove('menu-open');
+                if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+            }
+        });
     }
 
     setupCurriculumButtons() {
@@ -323,32 +390,41 @@ class GradeX {
     }
 
     createCurriculumSection() {
-        // Add curriculum courses section after the courses table
-        const rightPanel = document.querySelector('.right-panel');
-        if (rightPanel) {
-            const curriculumCard = document.createElement('div');
-            curriculumCard.className = 'card';
-            curriculumCard.innerHTML = `
-                <div class="card-header">
-                    <h3><i class="fas fa-book"></i> SZABIST Curriculum Courses</h3>
-                </div>
-                <div class="card-body">
-                    <div id="curriculumCourses">
-                        <div class="empty-state">
-                            <i class="fas fa-graduation-cap"></i>
-                            <h4>Select Program & Semester</h4>
-                            <p>Choose your program and semester to see the curriculum courses</p>
+        setTimeout(() => {
+            const rightPanel = document.querySelector('.right-panel');
+            if (rightPanel && !document.getElementById('curriculumCourses')) {
+                const curriculumCard = document.createElement('div');
+                curriculumCard.className = 'card';
+                curriculumCard.innerHTML = `
+                    <div class="card-header">
+                        <h3><i class="fas fa-book"></i> SZABIST Curriculum Courses</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="curriculumCourses">
+                            <div class="empty-state">
+                                <i class="fas fa-graduation-cap"></i>
+                                <h4>Select Program & Semester</h4>
+                                <p>Choose your program and semester to see the curriculum courses</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            
-            // Insert after courses table card
-            const coursesCard = rightPanel.querySelector('.card');
-            if (coursesCard) {
-                coursesCard.insertAdjacentElement('afterend', curriculumCard);
+                `;
+                
+                const coursesCard = rightPanel.querySelector('.card');
+                if (coursesCard) {
+                    coursesCard.insertAdjacentElement('afterend', curriculumCard);
+                }
             }
-        }
+        }, 200);
+    }
+
+    addCurriculumSection() {
+        // This is a backup method to ensure curriculum section is added
+        setTimeout(() => {
+            if (!document.getElementById('curriculumCourses')) {
+                this.createCurriculumSection();
+            }
+        }, 500);
     }
 
     showCurriculumCourses() {
@@ -356,7 +432,11 @@ class GradeX {
         const semester = this.currentSemester;
         const curriculumDiv = document.getElementById('curriculumCourses');
         
-        if (!curriculumDiv) return;
+        if (!curriculumDiv) {
+            this.addCurriculumSection();
+            setTimeout(() => this.showCurriculumCourses(), 100);
+            return;
+        }
         
         if (!program || !semester) {
             curriculumDiv.innerHTML = `
@@ -399,7 +479,10 @@ class GradeX {
                         <div class="curriculum-name">${course.name}</div>
                         <div class="curriculum-credits">${course.credits} Credits</div>
                     </div>
-                    <button class="btn-icon small add-course-btn" data-course='${JSON.stringify(course)}'>
+                    <button class="btn-icon small add-course-btn" 
+                            data-code="${course.code}" 
+                            data-name="${course.name}" 
+                            data-credits="${course.credits}">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -418,8 +501,11 @@ class GradeX {
         // Add event listeners to individual add buttons
         document.querySelectorAll('.add-course-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const courseData = JSON.parse(e.target.closest('.add-course-btn').dataset.course);
-                this.addCurriculumCourse(courseData);
+                const code = e.target.closest('.add-course-btn').dataset.code;
+                const name = e.target.closest('.add-course-btn').dataset.name;
+                const credits = parseInt(e.target.closest('.add-course-btn').dataset.credits);
+                
+                this.addCurriculumCourse({ code, name, credits });
             });
         });
     }
@@ -446,6 +532,9 @@ class GradeX {
         document.getElementById('courseCategory').value = categoryMap[codePrefix] || 'GEN';
         
         toastr.info(`Loaded ${courseData.code}. Enter marks and click "Add Course"`);
+        
+        // Scroll to form
+        document.getElementById('courseCode').focus();
     }
 
     addAllCurriculumCourses(courses) {
@@ -453,6 +542,7 @@ class GradeX {
             return;
         }
         
+        let addedCount = 0;
         courses.forEach(course => {
             const gradeInfo = this.calculateGrade(85); // Default 85 marks
             const newCourse = {
@@ -474,13 +564,14 @@ class GradeX {
             };
             
             this.courses.push(newCourse);
+            addedCount++;
         });
         
         this.updateCoursesTable();
         this.updateStats();
         this.saveCourses();
         
-        toastr.success(`Added ${courses.length} courses from curriculum`);
+        toastr.success(`Added ${addedCount} courses from curriculum`);
     }
 
     calculateGrade(marks) {
@@ -556,8 +647,18 @@ class GradeX {
             return;
         }
         
-        if (!code || !name) {
-            toastr.error('Please enter course code and name');
+        if (!category) {
+            toastr.error('Please select course category');
+            return;
+        }
+        
+        if (!code || code === '') {
+            toastr.error('Please enter course code');
+            return;
+        }
+        
+        if (!name || name === '') {
+            toastr.error('Please enter course name');
             return;
         }
         
@@ -595,6 +696,17 @@ class GradeX {
         this.updateGradePreview();
         
         toastr.success(`Added ${code} - ${gradeInfo.grade} grade`);
+        
+        // Close mobile menu if open
+        if (window.innerWidth <= 768) {
+            const leftPanel = document.querySelector('.left-panel');
+            if (leftPanel) {
+                leftPanel.classList.remove('mobile-visible');
+                document.body.classList.remove('menu-open');
+                const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+            }
+        }
     }
 
     addCourseToTable(course) {
@@ -612,13 +724,14 @@ class GradeX {
                 <div class="course-name">${course.name}</div>
                 <small class="course-meta">${course.category} • Sem ${course.semester}</small>
             </td>
+            <td>${course.category}</td>
             <td class="text-center">${course.credits}</td>
             <td class="text-center">${course.marks}</td>
             <td class="text-center">
                 <span class="grade-badge ${course.grade}">${course.grade}</span>
             </td>
             <td class="text-center"><strong>${course.points.toFixed(2)}</strong></td>
-            <td>
+            <td class="text-center">
                 <button class="btn-icon small delete-btn" data-id="${course.id}" title="Delete">
                     <i class="fas fa-trash"></i>
                 </button>
@@ -1017,89 +1130,53 @@ class GradeX {
 // Initialize GradeX when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.gradeX = new GradeX();
+    
+    // Add mobile touch support
+    addTouchSupport();
 });
 
-// Add CSS for curriculum section
-const curriculumStyles = document.createElement('style');
-curriculumStyles.textContent = `
-    .curriculum-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
+function addTouchSupport() {
+    // Touch active state for buttons
+    document.querySelectorAll('.btn, .action-btn, .btn-icon').forEach(button => {
+        button.addEventListener('touchstart', function() {
+            this.classList.add('touch-active');
+        });
+        
+        button.addEventListener('touchend', function() {
+            this.classList.remove('touch-active');
+        });
+    });
     
-    .curriculum-header h4 {
-        margin: 0;
-        color: var(--gray-dark);
-    }
+    // Prevent zoom on input focus for iOS
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        input.addEventListener('focus', function() {
+            if (window.innerWidth <= 768) {
+                document.body.style.zoom = "100%";
+            }
+        });
+    });
     
-    .curriculum-list {
-        max-height: 300px;
-        overflow-y: auto;
-    }
-    
-    .curriculum-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.75rem;
-        background: var(--lighter);
-        border-radius: var(--radius);
-        margin-bottom: 0.5rem;
-        border: 1px solid rgba(0,0,0,0.05);
-        transition: var(--transition);
-    }
-    
-    .curriculum-item:hover {
-        background: var(--light);
-        transform: translateX(4px);
-    }
-    
-    .curriculum-info {
-        flex: 1;
-    }
-    
-    .curriculum-code {
-        font-weight: 600;
-        color: var(--primary);
-        margin-bottom: 0.25rem;
-    }
-    
-    .curriculum-name {
-        font-size: 0.9rem;
-        color: var(--gray-dark);
-        margin-bottom: 0.25rem;
-    }
-    
-    .curriculum-credits {
-        font-size: 0.8rem;
-        color: var(--gray);
-    }
-    
-    .add-course-btn:hover {
-        background: var(--success);
-        border-color: var(--success);
-    }
-    
-    body.dark-mode .curriculum-item {
-        background: #333333;
-        border-color: #404040;
-    }
-    
-    body.dark-mode .curriculum-item:hover {
-        background: #3a3a3a;
-    }
-    
-    body.dark-mode .curriculum-code {
-        color: var(--primary-light);
-    }
-    
-    body.dark-mode .curriculum-name {
-        color: #e0e0e0;
-    }
-`;
-document.head.appendChild(curriculumStyles);
-
+    // Add touch styles
+    const touchStyles = document.createElement('style');
+    touchStyles.textContent = `
+        .touch-active {
+            opacity: 0.8;
+            transform: scale(0.98) !important;
+        }
+        
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover, .action-btn:hover, .btn-icon:hover,
+            .stat-card:hover, .card:hover, .footer-links a:hover,
+            .curriculum-item:hover, .grade-scale-row:hover {
+                transform: none !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .btn, input[type="text"], select, button {
+                min-height: 44px !important;
+            }
+        }
+    `;
+    document.head.appendChild(touchStyles);
+}
